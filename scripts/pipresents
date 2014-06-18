@@ -1,0 +1,81 @@
+#!/bin/sh -x
+# /etc/init.d/pipresents
+### BEGIN INIT INFO
+# Provides:          pipresents
+# Required-Start:    $remote_fs
+# Required-Stop:     $remote_fs
+# X-Start-Before:    nis
+# X-Stop-After:      nis
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# X-Interactive:     true
+# Short-Description: Start pipresents 
+# Description:       Start pipresents with livephoto profile 
+### END INIT INFO
+
+set -e
+
+exec > /var/tmp/pipresents 3>&1 4>&1 2>&1
+
+NAME="pipresents"
+PATH=/usr/bin:/usr/sbin:/bin:/sbin
+PP_HOME=/home/pi
+PIP_HOME=/home/pi/pipresents
+
+# Exit if the package is not installed
+[ -x "${PIP_HOME}" ] || exit 0
+
+start_pip () {
+
+#    nohup sudo -u pi python ${PIP_HOME}/pipresents.py \
+#	 -o ${PP_HOME} -p livephoto -f > /dev/null &
+     if [ `whoami` != "root" ] ;
+     then
+       nohup sudo -i python ${PIP_HOME}/pipresents.py \
+       -p livephoto -f --gpio --home ${PP_HOME} > /dev/null &
+     else
+       nohup python ${PIP_HOME}/pipresents.py \
+        -p livephoto -f --gpio --home ${PP_HOME} > /dev/null &
+     fi
+}
+
+stop_pip () {
+    sudo ps -ef | grep "pipresents.py"| grep -v grep | awk '{ print "sudo kill -9 " $2 }'|sh
+
+}
+
+case "$1" in
+  start)
+    printf "%-50s" "Starting $NAME..."
+    start_pip
+  ;;
+
+  restart|reload|force-reload)
+    printf "%-50s" "Restarting $NAME..."
+    stop_pip
+    start_pip
+  ;;
+
+  stop)
+    printf "%-50s" "Stopping $NAME..."
+    stop_pip
+  ;;
+
+  status)
+    printf "%-50s" "Checking $NAME..."
+    count=`ps -ef | grep "python ${PIP_HOME}/pipresents.py" | grep -v grep|wc -l`
+
+    if [ ${count} -gt 1 ]; then
+      printf "%s\n" "Ok"
+    else
+      printf "%s\n" "Process not found"
+    fi
+  ;;
+  *)
+    log_success_msg "Usage: /etc/init.d/$0 {start|stop|status|restart|reload|force-reload}"
+    exit 1
+    ;;
+esac
+
+exit 0
+

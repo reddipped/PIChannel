@@ -1,0 +1,12 @@
+# More configuration options here:
+# http://pyropus.ca/software/getmail/configuration.html
+[retriever]
+type = SimpleIMAPSSLRetriever
+server = imap.gmail.com
+mailboxes = ("Inbox",)
+username = john.doe@gmail.com
+password = Jan3D03
+
+[destination]
+type = Maildir
+path = ~/mail.mbox/

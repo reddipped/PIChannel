@@ -1,0 +1,102 @@
+body {
+	margin: 0;
+	padding: 0;
+	background: #000000; 
+	font: normal small Helvetica, "Times New Roman", Times, serif;
+	line-height: 1.8em;
+	color: #797C7A;
+}
+
+
+
+h1, h2, h3, h4, h5, h6 {
+	margin: 0;
+	padding: 0;
+	color: #999999;
+}
+
+h2 {
+	color: #AAAAAA;
+}
+
+
+
+#header {
+	height: 140px ;
+	width: auto ;
+}
+
+#header .logo {
+	margin: 20px 50px 20px auto;
+	float: right;
+
+}
+
+#header .title {
+	margin: 20px auto 20px 50px;
+	float: left;
+
+}
+
+
+#form {
+	margin: 30px auto 0 100px;
+	width: 500px ;
+	float: left;
+
+}
+
+#form h1 {
+
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+#form checkbox {
+	margin: 2px 0px 2px 0 ;
+	width: 400px;
+   	height: 30px;
+}
+
+#form .option {
+	margin: 2px 0px 2px 0 ;
+	width: 400px;
+   	height: 30px;
+}
+
+#form .label {
+	height: 30px ;
+	width: 200px ;
+	float: left;
+}
+
+#form .text {
+	margin: 2px 0px 2px 0 ;
+	width: 400px;
+   	height: 30px;
+}
+
+#form .waitindicator {
+        margin: 2px 0px 2px 0 ;
+        width: 200px;
+        height: 200px;
+
+}
+
+
+
+#status {
+	margin: 30px auto 0px 30px;
+	width: 300px ;
+	float: left ;
+}
+
+#status h1 {
+
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+#status p {
+	margin: 0px auto 20px auto;
+}

@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Pi Presents
+Exec=sudo python /home/pi/pipresents/pipresents.py -p livephoto -f --gpio --home /home/pi
+Terminal=false
+StartupNotify=true

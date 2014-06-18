@@ -1,0 +1,95 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>Pi Channel</title>
+<link href="css/default.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/spin.js"/>
+<script></script>
+<script type="text/javascript">
+ 
+        var spinner ;
+        function myFunc ()
+        {	
+            var opts = {
+                lines: 24, // The number of lines to draw
+                length: 70, // The length of each line
+                width: 15, // The line thickness
+                radius: 70, // The radius of the inner circle
+                color: '#FFF', // #rbg or #rrggbb
+                speed: 1, // Rounds per second
+                trail: 10, // Afterglow percentage
+                shadow: true // Whether to render a shadow
+            };
+            var target = document.getElementById('spin');
+            spinner = new Spinner(opts).spin(target);
+        }
+
+        /**
+        * Install the function to the appropriate event
+        */
+        if(window.addEventListener) {
+            window.addEventListener('DOMContentLoaded', myFunc, false);
+        } else {
+            window.onload = function ()
+            {
+                myFunc();
+            }
+        }
+
+	function getXmlHttp() {
+	    var xmlhttp;
+	    try {
+	        xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+	    } catch (e) {
+	        try {
+	            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	        } catch (E) {
+	            xmlhttp = false;
+	        }
+	    }
+	    if (!xmlhttp && typeof XMLHttpRequest != 'undefined') {
+       	 	xmlhttp = new XMLHttpRequest();
+	    }
+	    return xmlhttp;
+	}
+
+	function redirectIfAvail(url) {
+	    var xmlhttp = getXmlHttp();
+	    avail=false
+	    try {
+	        xmlhttp.open('GET', url, false);
+	        xmlhttp.send();
+	     } catch (E) {}
+
+	     if (xmlhttp.status == 200) {
+	        spinner.stop();
+	        window.location.href = window.location.protocol+"//"+window.location.host+"/index.py";
+	     }      
+	}
+
+</script>
+</head>
+<body>
+
+	<div id="header">
+		<div class="logo"><img src="img/pichannel_logo.png"/></div>
+		<div class="title"><img src="img/pichannel_title.png"/></div>
+
+	</div>
+
+	<div id="container">
+		<div id="form">
+			<h1>Applying config changes</h1>
+                	<div id="spin"></div>
+			[[-MESSAGE-]]
+		</div>
+		<script type="text/javascript">
+			setInterval(function(){redirectIfAvail(window.location.protocol+"//"+window.location.host+"/index.py")},10000);
+		</script>
+	</div>
+	<div id="status">
+	</div>
+	</div>
+</body>
+</html>
+
