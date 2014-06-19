@@ -14,12 +14,12 @@ sed --in-place "s/^\(iface default.*\)/#\1/" /etc/network/interfaces
 echo "pichannel" | sudo tee /etc/hostname
 # create wifi monitoring script to prevent disconnect
 mkdir /root/scripts
-cat <<EOF2 | tee /root/scripts/wifimonitor.sh
+cat <<EOF2 > /root/scripts/wifimonitor.sh
 #!/bin/sh
 
 if ! ifconfig wlan0 | grep -q "inet addr:" ; then
-      echo "Network connection down! Attempting reconnection."
-      ifup --force wlan0
+  echo "Network connection down! Attempting reconnection."
+  ifup --force wlan0
 fi
 EOF2
 chmod u+x /root/scripts/wifimonitor.sh
