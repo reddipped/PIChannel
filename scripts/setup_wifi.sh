@@ -19,7 +19,7 @@ cat <<EOF2 > /root/scripts/wifimonitor.sh
 
 if ! ifconfig wlan0 | grep -q "inet addr:" ; then
   echo "Network connection down! Attempting reconnection."
-  ifup --force wlan0
+  /sbin/ifup --force wlan0
 fi
 EOF2
 chmod u+x /root/scripts/wifimonitor.sh

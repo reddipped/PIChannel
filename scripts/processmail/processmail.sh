@@ -12,6 +12,7 @@ MEDIA=/home/pi/pp_home/media
 MEDIAMETA=/home/pi/pp_home/media-metadata
 MAXPCTUSG=95
 APPLEMOVEXT="*mov*"
+IMGLIST="*jpg*jpeg*png*"
 
 # assure minimal free disk space
 cp --force ${MEDIAMETA} ${MEDIAMETA}.TMP
@@ -50,14 +51,22 @@ then
       # extract short message
       shortmessage=`mu view "${file}" --summary | grep "^Subject" | sed 's/Subject: \(.*\)$/\1/'`
 
-      # process all attachments, move all attchments to livetracks dir with timestamp filename 
+      # process all attachments, move all attachments to livetracks dir with timestamp filename 
       for attach in ${TMPPROCDIR}/*
       do
         imgcount=$(($imgcount + 1))
         extension="${attach##*.}"
+        # change extension of .mov files to .mp4
         if  echo $APPLEMOVEXT | grep -iq $extension ; then extension="mp4" ; fi
         medianame=$(date +%Y%m%d%H%M%S-%N).${extension}
-        mv "${attach}" "${MEDIA}/${medianame}"
+        # fix orientation for images sent by smartphones
+        if echo $IMGLIST | grep -iq $extension ;
+	    then
+        	convert -auto-orient "${attach}" "${MEDIA}/${medianame}"
+        	rm -f "${attach}"
+        else
+            mv "${attach}" "${MEDIA}/${medianame}"
+        fi
         echo ${medianame} ${shortmessage} >> ${MEDIAMETA}.TMP
       done
       rm -f $file

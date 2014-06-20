@@ -1,4 +1,5 @@
 #/bin/sh
+sudo apt-get install imagemagick
 sudo apt-get -y install getmail4
 mkdir ~/.getmail
 cd ~/.getmail
