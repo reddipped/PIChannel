@@ -44,10 +44,12 @@ for dir in fsck news; do [ -d "/var/log/$dir" ] && rm -rf "/var/log/$dir"; done
 # create syslog.conf
 echo -e "*.*;mail.none;cron.none\t -/var/log/messages\ncron.*\t -/var/log/cron\nmail.*\t -/var/log/mail" > /etc/syslog.conf # config logrotate
 mkdir -p /etc/logrotate.d
-echo -e "/var/log/lightdm/*.log\n/var/log/lighttp/*.log\n/var/log/ntpstats/*log\n/var/log/apt/*.log\n/var/log/ConsoleKit/*.log\n/var/log/*.err\n/var/log/*warn\n/var/log/*info\n/var/log/faillog\n/var/log/*.log\n/var/log/wtmp\n/var/log/cron\n/var/log/mail\n/var/log/messages {\n\trotate 0\n\tdaily\n\tmissingok\n\tnotifempty\n\tcompress\n\tsharedscripts\n\tpostrotate\n\t/etc/init.d/inetutils-syslogd reload >/dev/null\n\tendscript\n}\n"  > /etc/logrotate.d/inetutils-syslogd
+echo -e "rotate 0\ndaily\nmissingok\nnotifempty\ncompress\nsharedscripts\nsize=1024k\n\n/var/log/Xorg.0.log\n/var/log/auth.log\n/var/log/daemon.log\n/var/log/debug\n/var/log/dmesg\n/var/log/faillog\n/var/log/kern.log\n/var/log/lastlog\n/var/log/lightdm\n/var/log/lightdm/x-0.log\n/var/log/lightdm/lightdm.log\n/var/log/lpr.log\n/var/log/mail.err\n/var/log/mail.info\n/var/log/mail.log\n/var/log/mail.warn\n/var/log/ntpstats\n/var/log/syslog\n/var/log/test\n/var/log/user.log\n/var/log/uucp.log\n/var/log/messages {\n\tpostrotate\n\t/etc/init.d/inetutils-syslogd reload >/dev/null\n\tendscript\n}\n" > /etc/logrotate.d/inetutils-syslogd
 # start syslogd
 service inetutils-syslogd start
 # disable screen blanking 
 sudo sed --in-place '/^exit 0/i setterm -blank 0' /etc/rc.local
 # clean /var/tmp on boot
 sudo sed --in-place '/^exit 0/i rm -rf /var/tmp/*' /etc/rc.local
+# run periodic jobs on more feasible time 
+sudo sed --in-place 's/^\([0-9]\+\)\s\+6\(\s\+.*\)/\1 17\2/' /etc/crontab
