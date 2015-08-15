@@ -68,14 +68,15 @@ then
             mv "${attach}" "${MEDIA}/${medianame}"
         fi
         echo ${medianame} ${shortmessage} >> ${MEDIAMETA}.TMP
-      done
-      rm -f $file
+      done      
      fi
+     rm -f $file
   done 
 
   status="${status} success ${imgcount} new images retrieved"
 
   cp --force ${MEDIAMETA}.TMP ${MEDIAMETA}
+  sed -i 's/[\d128-\d255]//g' ${MEDIAMETA}
   /home/pi/processmail/rebuild_media.sh
   sudo /etc/init.d/lightdm restart
 else
