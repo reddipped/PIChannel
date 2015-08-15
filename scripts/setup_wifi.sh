@@ -26,3 +26,8 @@ chmod u+x /root/scripts/wifimonitor.sh
 # schedule wifimonitor.sh in crontab
 (crontab -l; echo "1 * * * * /root/scripts/wifimonitor.sh" ) \
 | crontab -
+# disable power management
+cat <<EOF3 >/etc/modprobe.d/8192cu.conf
+# Disable power management
+options 8192cu rtw_power_mgnt=0 rtw_enusbss=0
+EOF3
