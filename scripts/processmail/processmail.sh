@@ -14,6 +14,10 @@ MAXPCTUSG=95
 APPLEMOVEXT="*mov*"
 IMGLIST="*jpg*jpeg*png*"
 
+LANG=
+LANGUAGE=
+LC_CTYPE="POSIX"
+
 # assure minimal free disk space
 cp --force ${MEDIAMETA} ${MEDIAMETA}.TMP
 while [ ${MAXPCTUSG} -lt $(df -h  ${MEDIA} | awk '{ print $5 }' | tail -1 | cut -d'%' -f1) ]
@@ -76,7 +80,10 @@ then
   status="${status} success ${imgcount} new images retrieved"
 
   cp --force ${MEDIAMETA}.TMP ${MEDIAMETA}
+  # Remove emoticons
   sed -i 's/[\d128-\d255]//g' ${MEDIAMETA}
+  # Replace double by single quote
+  sed -i 's/"/\x27/g' ${MEDIAMETA}
   /home/pi/processmail/rebuild_media.sh
   sudo /etc/init.d/lightdm restart
 else
