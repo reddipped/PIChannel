@@ -7,6 +7,7 @@ sudo apt-get -y install x11-xserver-utils
 sudo apt-get -y install unclutter
 sudo apt-get -y install mplayer
 sudo apt-get -y install uzbl
+sudo apt-get -y install omxplayer
 # Install pexpect
 cd ~
 wget http://pexpect.sourceforge.net/pexpect-2.3.tar.gz
