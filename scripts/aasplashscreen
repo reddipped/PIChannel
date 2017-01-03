@@ -3,7 +3,7 @@
 # Provides:          asplashscreen
 # Required-Start:
 # Required-Stop:
-# Should-Start:      
+# Should-Start:
 # Default-Start:     S
 # Default-Stop:
 # Short-Description: Show custom splashscreen
@@ -13,7 +13,8 @@
 
 do_start () {
 
-    /usr/bin/fbi -T 1 -noverbose -a /etc/pichannel.png    
+    /usr/bin/fbi -T 1 -noverbose -a /etc/pichannel.png 
+
     exit 0
 }
 

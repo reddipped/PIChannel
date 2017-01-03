@@ -19,9 +19,9 @@ LANGUAGE=
 LC_CTYPE="POSIX"
 
 # assure minimal free disk space
-if [ -d ${MEDIAMETA} ] ;
+if [ ! -d ${MEDIAMETA} ] ;
 then
-  mkdir "${MEDIAMETA}"
+  touch "${MEDIAMETA}"
 fi
 cp --force ${MEDIAMETA} ${MEDIAMETA}.TMP
 while [ ${MAXPCTUSG} -lt $(df -h  ${MEDIA} | awk '{ print $5 }' | tail -1 | cut -d'%' -f1) ]

@@ -9,7 +9,7 @@ chmod u+x /etc/init.d/aasplashscreen
 insserv /etc/init.d/aasplashscreen
 cp /var/tmp/pichannel.png /etc
 # quiet boot mode
-echo `cat /boot/cmdline.txt` quiet logo.nologo loglevel=3 | tee /var/tmp/cmdline.txt
+echo `cat /boot/cmdline.txt` quiet splash logo.nologo loglevel=3 | tee /var/tmp/cmdline.txt
 cp /var/tmp/cmdline.txt /boot
 sed --in-place "s/console=tty1/console=tty3/" /boot/cmdline.txt
 # reboot to test
