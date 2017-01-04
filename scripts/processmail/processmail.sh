@@ -18,6 +18,12 @@ LANG=
 LANGUAGE=
 LC_CTYPE="POSIX"
 
+# prevent concurrent running instances
+if pidof -x "$0" -o $$ >/dev/null; then
+    echo "Process already running"
+    exit 1
+fi
+
 # assure minimal free disk space
 if [ ! -d ${MEDIAMETA} ] ;
 then

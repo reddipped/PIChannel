@@ -10,6 +10,11 @@ MEDIAJSON=/home/pi/pp_home/pp_profiles/livephoto/media.json
 IMGLIST="*jpg*jpeg*png*"
 MOVLIST="*mp4*"
 
+# prevent concurrent running instances
+if pidof -x "$0" -o $$ >/dev/null; then
+    echo "Process already running"
+    exit 1
+fi
 
 cat <<EOF > ${MEDIAJSON}.NEW
 {
