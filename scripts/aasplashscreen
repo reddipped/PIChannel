@@ -12,10 +12,12 @@
 
 
 do_start () {
-
-    /usr/bin/fbi -T 1 -noverbose -a /etc/pichannel.png 
-
-    exit 0
+  _IP=$(hostname -I) || true
+  _IP=$(echo "${_IP}" | sed 's/[ \t]*$//')
+  /usr/bin/fbi --noreadahead --timeout 10 -T 1 -noverbose --nocomments --autozoom --once /etc/pichannelorg.png /etc/pichannel.png &
+  /usr/bin/convert /etc/pichannelorg.png -font FreeSans-Bold -pointsize 40 -gravity southwest -fill white -annotate +0+0 "http://$_IP/index.py" /etc/pichannel.png
+  sleep 10
+  exit 0
 }
 
 case "$1" in

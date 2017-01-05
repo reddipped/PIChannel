@@ -22,47 +22,6 @@ cat <<EOF > ${MEDIAJSON}.NEW
  "tracks": [
 EOF
 
-## Present webinterface address on boot
-_IP=$(hostname -I) || true
-if [ "$1" = "init" ] && [ "$_IP" ] ;
-then
-  _IP=$(echo "${_IP}" | sed 's/[ \t]*$//')
-  cat <<EOF >> ${MEDIAJSON}.NEW
-{
- "animate-begin": "",
- "animate-clear": "no",
- "animate-end": "",
- "background-colour": "black",
- "background-image": "",
- "display-show-background": "no",
- "display-show-text": "yes",
- "duration": "",
- "image-window": "fit",
- "links": "",
- "location": "",
- "plugin": "",
- "show-control-begin": "",
- "show-control-end": "",
- "message-colour": "white",
- "message-font": "Helvetica 50 bold",
- "message-justify": "center",
- "message-x": "",
- "message-y": "",
- "text": "Management interface\n\n http://$_IP/index.py",
- "thumbnail": "",
- "title": "",
- "track-ref": "",
- "track-text": "",
- "track-text-colour": "white",
- "track-text-font": "Helvetica 22",
- "track-text-x": "60",
- "track-text-y": "10",
- "transition": "cut",
- "type": "message"
-},
-EOF
-fi
-
 for file in $(ls -1r ${MEDIA}/*)
 do
  filename=$(basename ${file})

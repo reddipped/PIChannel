@@ -8,6 +8,7 @@ chmod u+x /etc/init.d/aasplashscreen
 #sudo update-rc.d aasplashscreen defaults
 insserv /etc/init.d/aasplashscreen
 cp /var/tmp/pichannel.png /etc
+cp /var/tmp/pichannel.png /etc/pichannelorg.png
 # quiet boot mode
 echo `cat /boot/cmdline.txt` quiet splash logo.nologo loglevel=3 | tee /var/tmp/cmdline.txt
 cp /var/tmp/cmdline.txt /boot

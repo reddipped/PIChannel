@@ -23,9 +23,5 @@ echo "*/5 * * * * /home/pi/processmail/processmail.sh" ) \
 | crontab -
 # create empty status file
 touch /var/tmp/processmail.sts
-# rebuild presentation on boot
-sudo sed --in-place '/^exit 0/i sudo -u pi touch /var/tmp/pichannelboot.sts &' /etc/rc.local
 # create processmail.sts on boot
 sudo sed --in-place '/^exit 0/i sudo -u pi touch /var/tmp/processmail.sts &' /etc/rc.local
-# add firstrononboot to /etc/xdg/lxsession/LXDE/autostart
-sudo sh -c 'echo "@/bin/sh /home/pi/processmail/firstrunonboot.sh" >> /etc/xdg/lxsession/LXDE/autostart'
