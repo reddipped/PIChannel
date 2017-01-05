@@ -28,7 +28,7 @@ def getWlanState():
   c=0
   while c < len(splitoutput):
       searchresult = re.search("^.*inet addr:(\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}) .* ", splitoutput[c])
-      if searchresult: 
+      if searchresult:
           wifistate="up (" + searchresult.group(1)  + ")"
       c=c+1
 
@@ -45,7 +45,7 @@ def setWlanState(state='down'):
     df = subprocess.Popen(["sudo","sed","--in-place","s/^#\(auto\s*wlan0.*\)$/\\1/","/etc/network/interfaces"], stdout=subprocess.PIPE)
     df = subprocess.Popen(["sudo","ifup","wlan0","--force"], stdout=subprocess.PIPE)
 
- 
+
 ## count images
 def getImgCount():
   directory = "/home/pi/pp_home/media"
@@ -60,9 +60,9 @@ def getMovCount():
   directory = "/home/pi/pp_home/media"
   list_of_files = [file for file in os.listdir(directory) if file.lower().endswith('.mov') or file.lower().endswith('.mp4')]
   movcount = len(list_of_files)
-  
+
   return movcount
-  
+
 
 ## Last mailretrieval status
 def getMailstatus():
@@ -72,16 +72,16 @@ def getMailstatus():
     mailstatus = f.read()
   finally:
     f.close()
-  
+
   return mailstatus
 
-  
+
 ## get volume setting
 def getVolume():
   f = open('/home/pi/pp_home/pp_profiles/livephoto/pp_showlist.json', 'r')
   currentvolume=0
   for line in f:
-      searchresult = re.search('"omx-volume":\s\s*"(-*\d+)"\s*,', line) 
+      searchresult = re.search('"omx-volume":\s\s*"(-*\d+)"\s*,', line)
       if searchresult:
         currentvolume=int(searchresult.group(1))
   f.close()
@@ -97,9 +97,9 @@ def setVolume(volume=0):
   file_str = re.sub(r'("omx-volume": )\s*"-*\d+"\s*,', r'\1"' + volume + '",',file_str)
 
   with open(filename, "w") as f:
-    f.write(file_str) 
+    f.write(file_str)
 
-  
+
 ## get slide duration
 def getSlideduration():
 
@@ -127,11 +127,11 @@ def setSlideduration(duration=5):
     f.write(file_str)
     f.close()
 
-  
+
 ## get wifi wpa-ssid
 def getWpaSSID():
 
-  f = open('/etc/network/interfaces','r') 
+  f = open('/etc/network/interfaces','r')
   wpassid=""
   for line in f:
       searchresult = re.search("^\s*wpa-ssid\s(.*)$", line)
@@ -140,7 +140,7 @@ def getWpaSSID():
   f.close()
 
   return wpassid
-  
+
 ## set wifi wpa-ssid
 def setWpaSSID(wpassid = ""):
   output = subprocess.check_output(["/usr/bin/sudo /bin/sed --in-place  's/^\(\s*wpa-ssid\s\).*$/\\1" + wpassid + "/' /etc/network/interfaces"], shell=True,stderr=subprocess.PIPE)
@@ -150,7 +150,7 @@ def setWpaSSID(wpassid = ""):
 def getWpaPSK():
 
   ## get wifi wpa-psk
-  f = open('/etc/network/interfaces','r') 
+  f = open('/etc/network/interfaces','r')
   wpapsk=""
   for line in f:
       searchresult = re.search("^\s*wpa-psk\s(.*)$", line)
@@ -171,10 +171,10 @@ def getWifiStatus():
   wifienabled=""
   if wifistate != "down":
     wifienabled = "checked"
-  
+
   return wifienabled
 
-  
+
 ## get e-mail retrieval interval
 def getEmailInterval():
   currentmailretrieveinterval=5
@@ -195,7 +195,7 @@ def getEmailInterval():
 def setEmailInterval(interval=5):
   output = subprocess.check_output(["/usr/bin/crontab -l | /bin/sed 's/^\(\*\/\)[0-9]\+\(.*processmail\.sh.*\)/\\1"+str(interval)+"\\2/' | /usr/bin/crontab -"], shell=True,stderr=subprocess.PIPE)
 
-  
+
 ## get mailserver
 def getMailserver():
   f = open('/home/pi/.getmail/getmailrc','r')
@@ -246,7 +246,7 @@ def getMailPassword():
 def setMailPassword(mailpwd = ""):
   output = subprocess.check_output(["/bin/sed --in-place  's/^\(password\s\+=\s\).*/\\1" + mailpwd + "/' /home/pi/.getmail/getmailrc"], shell=True,stderr=subprocess.PIPE)
 
-  
+
 ## get powermanagement
 def getPowerMgtEnabled():
   pmgtenabled='disabled'
@@ -257,7 +257,7 @@ def getPowerMgtEnabled():
   while c < len(splitoutput):
     searchresult = re.search("^(\d*)\s(\d*)\s.*\/sbin\/shutdown.*", splitoutput[c])
     if searchresult:
-      pmgtenabled='enabled' 
+      pmgtenabled='enabled'
     c=c+1
 
   return pmgtenabled
@@ -315,5 +315,4 @@ def setShutdownMinute(minute=0):
 
 ## restartPi
 def restartPi():
-  output = subprocess.check_output(["/usr/bin/sudo /sbin/shutdown -rF 0"],shell=True,stderr=subprocess.PIPE)
-
+  output = subprocess.check_output(["/usr/bin/sudo /sbin/shutdown -r"],shell=True,stderr=subprocess.PIPE)

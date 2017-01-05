@@ -38,5 +38,5 @@ chmod u+x /home/pi/www/py/*.py
 sudo chown -R pi:pi /var/log/lighttpd
 sudo service lighttpd restart
 
-# At disabled scheduled shutdown for root        
-/usr/bin/sudo /usr/bin/crontab -l | /bin/sed '1 a #50 23 * * * \/sbin\/shutdown -hF 0' | /usr/bin/sudo /usr/bin/crontab -
+# At disabled scheduled shutdown for root
+/usr/bin/sudo /usr/bin/crontab -l | /bin/sed '1 a #50 23 * * * \/sbin\/shutdown -h' | /usr/bin/sudo /usr/bin/crontab -

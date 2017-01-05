@@ -1,6 +1,6 @@
 #! /usr/bin/python
 #
-#                
+#
 
 import re
 import subprocess
@@ -59,15 +59,15 @@ if wifistate != "down":
   wifienabled = "checked"
 
 ## get wifi ssids
-ssidset = set() 
+ssidset = set()
 ssids = ""
-df = subprocess.Popen(["/sbin/iwlist", "wlan0", "scan"], stdout=subprocess.PIPE)
+df = subprocess.Popen(["sudo", "/sbin/iwlist", "wlan0", "scan"], stdout=subprocess.PIPE)
 output = df.communicate()[0]
 splitoutput=output.split("\n")
 c=0
 while c < len(splitoutput):
     searchresult = re.search("^.*ESSID:\"(.*)\".*", splitoutput[c])
-    if searchresult: 
+    if searchresult:
 	ssidset.update([searchresult.group(1)])
     c=c+1
 
@@ -113,25 +113,24 @@ while shuthour <= 23:
 ## Generate HTML
 f = open('../stz/index.stz', 'r')
 for line in f:
-	line = re.sub(r'\[\[-STORAGE-\]\]', availStorage, line) 
-	line = re.sub(r'\[\[-WIFISTATE-\]\]', wifistate, line) 
-	line = re.sub(r'\[\[-IMGCOUNT-\]\]', str(imagecount), line) 
-	line = re.sub(r'\[\[-MOVCOUNT-\]\]', str(movcount), line) 
-	line = re.sub(r'\[\[-AUDIOVOLUME-\]\]', volhtml, line) 
-	line = re.sub(r'\[\[-SLIDEDURATION-\]\]', slidehtml, line) 
-	line = re.sub(r'\[\[-SSIDS-\]\]', ssids, line) 
-	line = re.sub(r'\[\[-WPAPSK-\]\]', wpapsk, line) 
-	line = re.sub(r'\[\[-WIFIENABLED-\]\]', wifienabled, line) 
-	line = re.sub(r'\[\[-MAILINTERVAL-\]\]', mailretrieveintervals, line) 
-	line = re.sub(r'\[\[-MAILSERVER-\]\]', mailserver, line) 
-	line = re.sub(r'\[\[-MAILUNAME-\]\]', mailuname, line) 
-	line = re.sub(r'\[\[-MAILPWD-\]\]', mailpwd, line) 
+	line = re.sub(r'\[\[-STORAGE-\]\]', availStorage, line)
+	line = re.sub(r'\[\[-WIFISTATE-\]\]', wifistate, line)
+	line = re.sub(r'\[\[-IMGCOUNT-\]\]', str(imagecount), line)
+	line = re.sub(r'\[\[-MOVCOUNT-\]\]', str(movcount), line)
+	line = re.sub(r'\[\[-AUDIOVOLUME-\]\]', volhtml, line)
+	line = re.sub(r'\[\[-SLIDEDURATION-\]\]', slidehtml, line)
+	line = re.sub(r'\[\[-SSIDS-\]\]', ssids, line)
+	line = re.sub(r'\[\[-WPAPSK-\]\]', wpapsk, line)
+	line = re.sub(r'\[\[-WIFIENABLED-\]\]', wifienabled, line)
+	line = re.sub(r'\[\[-MAILINTERVAL-\]\]', mailretrieveintervals, line)
+	line = re.sub(r'\[\[-MAILSERVER-\]\]', mailserver, line)
+	line = re.sub(r'\[\[-MAILUNAME-\]\]', mailuname, line)
+	line = re.sub(r'\[\[-MAILPWD-\]\]', mailpwd, line)
 	line = re.sub(r'\[\[-MAILSTATUS-\]\]', mailstatus, line)
 	line = re.sub(r'\[\[-PMENABLED-\]\]', pmgtenabled, line)
-	line = re.sub(r'\[\[-SHUTDOWNH-\]\]', shutdownhouroption, line) 
-	line = re.sub(r'\[\[-SHUTDOWNM-\]\]', shutdownminoption, line) 
+	line = re.sub(r'\[\[-SHUTDOWNH-\]\]', shutdownhouroption, line)
+	line = re.sub(r'\[\[-SHUTDOWNM-\]\]', shutdownminoption, line)
 
         print line
 
 f.close()
-
